@@ -57,7 +57,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       let xrViewerSpace = null;
       let xrHitTestSource = null;
 
-      let numberOfARObject = 0;
+      let noFlowers = 0;
 
       // WebGL scene globals.
       let gl = null;
@@ -69,7 +69,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       arObject.visible = false;
       scene.addNode(arObject);
 
-      let flower = new Gltf2Node({url: 'media/gltf/flower/flower.gltf'});
+      let flower = new Gltf2Node({url: 'media/gltf/sunflower/sunflower.gltf'});
       arObject.addNode(flower);
 
       let reticle = new Gltf2Node({url: 'media/gltf/reticle/reticle.gltf'});
@@ -82,7 +82,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       vec3.set(shadow.scale, 0.15, 0.15, 0.15);
       arObject.addNode(shadow);
 
-      const MAX_FLOWERS = 2;
+      const MAX_FLOWERS = 30;
       let flowers = [];
 
       // Ensure the background is transparent for AR.
@@ -161,7 +161,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       // Adds a new object to the scene at the
       // specified transform.
       function addARObjectAt(matrix) {
-        console.log("Added AR")
         let newFlower = arObject.clone();
         newFlower.visible = true;
         newFlower.matrix = matrix;
@@ -182,11 +181,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       let rayDirection = vec3.create();
       function onSelect(event) {
         if (reticle.visible) {
-          console.log("OnSelect")
           // The reticle should already be positioned at the latest hit point, 
           // so we can just use it's matrix to save an unnecessary call to 
           // event.frame.getHitTestResults.
           addARObjectAt(reticle.matrix);
+          console.log(++noFlowers)
         }
       }
 
